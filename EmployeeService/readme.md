@@ -296,3 +296,19 @@ VALUES (5, 'Cloud Infrastructure Migration', 750000.00)
 ON DUPLICATE KEY UPDATE name=name;
 
 
+*********************************************88
+
+Sample Postman Test VectorsCreate Standalone Department via Idempotent Pipeline 
+(POST):
+URL: http://localhost:8080/api/v1/departments 
+Header: Idempotency-Key: initial_dept_tx_101
+Body(JSON):json
+{ "name": "Quality Assurance", "code": "QA" }
+
+Use code with caution.Create Standalone Role via Idempotent Pipeline 
+(POST):
+URL: http://localhost:8080/api/v1/roles 
+Header: Idempotency-Key: initial_role_tx_201
+Body(JSON):json
+{ "name": "ROLE_PRINCIPAL_ARCHITECT" }
+
