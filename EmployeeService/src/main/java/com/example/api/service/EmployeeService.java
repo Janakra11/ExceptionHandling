@@ -1,50 +1,19 @@
 package com.example.api.service;
 
 import com.example.api.model.Employee;
-import com.example.api.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
-@Service
-public class EmployeeService {
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    public List<Employee> getEmployees(){
-        List<Employee> employees = employeeRepository.findAll();
-        return employees;
-    }
-
-    public Employee addEmployee(Employee employee){
-        return employeeRepository.save(employee);
-    }
-
-    public void deleteEmployeeById(Long id){
-        employeeRepository.deleteById(id);
-    }
-
-    public void deleteEmployeeByEmail(String email){
-        employeeRepository.deleteEmployeeByEmail(email);
-    }
-
-    public Employee updateEmployee(Employee employee){
-
-        Employee dbEmp = employeeRepository.findEmployeeByEmail(employee.getEmail());
-
-        Employee emp = null;
-
-        if(dbEmp != null){
-            dbEmp.setName(employee.getName());
-            dbEmp.setDesignation(employee.getDesignation());
-            dbEmp.setAddress(employee.getAddress());
-            dbEmp.setSalary(employee.getSalary());
-
-            emp = employeeRepository.save(dbEmp);
-        }
-
-        return emp;
-    }
+public interface EmployeeService {
+    Employee saveEmployee(Employee employee);
+    List<Employee> getAllEmployees();
+    Employee getEmployeeById(Long id);
+    Employee updateEmployee(Long id, Employee updatedEmployee);
+    void deleteEmployee(Long id);
+    Employee assignDepartment(Long employeeId, Long departmentId);
+    Employee assignRoleAndProject(Long employeeId, Long roleId, Long projectId);
+    Map<String, Object> getAllEmployeesPaginated(String emailFilter, Pageable pageable);
 }

@@ -1,0 +1,244 @@
+{
+  "info": {
+    "_postman_id": "112fa69f-e3b0-4977-a09f-f597e8caa095",
+    "name": "EmployeeService",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "6752740"
+  },
+  "item": [
+    {
+      "name": "SaveEmployee",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Janakraj\",\r\n  \"lastName\": \"Khatal\",\r\n  \"email\": \"janakraj.khatal@company.com\",\r\n  \"hireDate\": \"2026-08-05\",\r\n  \"status\": \"ACTIVE\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateEmployee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": " application/json",
+            "type": "text"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "tx_put_details_103",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Amit\",\r\n  \"lastName\": \"PATIL\",\r\n  \"hireDate\": \"2026-07-05\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/employees/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "employees",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AssignDepartment",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": " application/json",
+            "type": "text"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "tx_dept_assign_uuid_04",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\":3,\r\n  \"firstName\": \"Janakraj\",\r\n  \"lastName\": \"Mehta-Sharma\",\r\n  \"email\": \"janakraj.khatal@company.com\",\r\n  \"hireDate\": \"2026-08-05\",\r\n  \"status\": \"ACTIVE\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/employees/3/department/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "employees",
+            "3",
+            "department",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AssignRole",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": " application/json",
+            "type": "text"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "tx_matrix_assign_uuid_03",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 1,\r\n  \"firstName\": \"Amit\",\r\n  \"lastName\": \"Patil\",\r\n  \"email\": \"amit.patil@company.com\",\r\n  \"hireDate\": \"2026-08-05\",\r\n  \"status\": \"ACTIVE\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/employees/2/assign?roleId=3&projectId=5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "employees",
+            "2",
+            "assign"
+          ],
+          "query": [
+            {
+              "key": "roleId",
+              "value": "3"
+            },
+            {
+              "key": "projectId",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Employees",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "allEmployePaginated",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/employees/paginated?email=janakrajkhatal@company.com&page=0&size=4&sortBy=lastName&direction=desc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "v1",
+            "employees",
+            "paginated"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "janakrajkhatal@company.com"
+            },
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "4"
+            },
+            {
+              "key": "sortBy",
+              "value": "lastName"
+            },
+            {
+              "key": "direction",
+              "value": "desc"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

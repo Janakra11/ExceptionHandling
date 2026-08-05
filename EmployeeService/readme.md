@@ -186,3 +186,113 @@ Use Case 2xx (Success)200      HttpStatus.OK Standard successful GET, PUT, or PA
     5xx (Server Error)
                      500       HttpStatus.INTERNAL_SERVER_ERROR Unhandled exceptions or internal database failures.
                      503       HttpStatus.SERVICE_UNAVAILABLE Server is overloaded or down for maintenance.************_
+*************************************************************************888
+Docker start up process
+*************************************************************************888
+
+Booting UpTo start the entire clustered application,
+
+verify your pom.xml, Dockerfile, and docker-compose.yml are sitting together in the root directory. 
+Execute the following terminal build step:
+      bashdocker compose up --build -d
+Use code with caution .Let me know if you would like me to add an API
+documentation tool like Swagger/OpenAPI or 
+custom Global Exception Handling controllers to gracefully process errors!
+
+****************************************************************88
+                    IDEMPOTENCY
+******************************************88
+To prevent duplicate records and accidental double-submissions
+(e.g., hitting the "Submit" button twice on a slow network), 
+you can implement Idempotency using an API key mechanism backed by your Redis cluster.
+Clients will pass a unique header token (Idempotency-Key) generated via a UUID v4 string 
+with every mutating request (POST, PUT). 
+
+If Redis sees the same key within a short time 
+window, it stops the request and returns the exact identical cached response from the 
+original execution without re-running your database or business logic.
+
+*********************************************************************88
+
+Runing redis 
+****************************************************************8
+
+To run Redis smoothly on Windows using Memurai or WSL (Windows Subsystem for Linux), 
+choose one of the two setups below.Both methods will fix your connection error by 
+launching a background Redis server on localhost:6379.
+🖥️ Option A: The Memurai Setup (Native Windows)Memurai is a production-ready, 
+native Windows port of Redis. It is the easiest option because it runs directly 
+on your host OS without requiring Linux emulation.Download: 
+Visit the Memurai Developer Download Portal 
+and download the .msi installer.Install: Run the installer.
+Keep the default port set to 6379.
+Verify: Memurai registers itself automatically as a native Windows service. 
+Open your Command Prompt (cmd) and verify it is running by sending a ping:
+    cmdmemurai-cli ping
+Expected Response as PONG
+****************************************************************88
+
+MYSQL DATA
+*************************************************8
+CREATE TABLE departments (
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(100) NOT NULL UNIQUE,
+code VARCHAR(10) NOT NULL UNIQUE
+);
+CREATE TABLE employees (
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+email VARCHAR(100) NOT NULL UNIQUE,
+hire_date DATE NOT NULL,
+status VARCHAR(20) DEFAULT 'ACTIVE',
+department_id BIGINT,
+FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
+);
+CREATE TABLE roles (
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE projects (
+id BIGINT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+budget DECIMAL(15, 2)
+);
+
+CREATE TABLE employee_roles (
+employee_id BIGINT NOT NULL,
+role_id BIGINT NOT NULL,
+PRIMARY KEY (employee_id, role_id),
+FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE,
+FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);
+
+CREATE TABLE employee_projects (
+employee_id BIGINT NOT NULL,
+project_id BIGINT NOT NULL,
+PRIMARY KEY (employee_id, project_id),
+FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE,
+FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+);
+
+-- 1. Insert Sample Departments
+INSERT INTO departments (id, name, code)
+VALUES (1, 'Engineering', 'ENG')
+ON DUPLICATE KEY UPDATE name=name;
+
+INSERT INTO departments (id, name, code)
+VALUES (2, 'Human Resources', 'HR')
+ON DUPLICATE KEY UPDATE name=name;
+
+-- 2. Insert Sample Roles
+INSERT INTO roles (id, name)
+VALUES (3, 'ROLE_SENIOR_DEVELOPER')
+ON DUPLICATE KEY UPDATE name=name;
+
+-- 3. Insert Sample Projects
+INSERT INTO projects (id, name, budget)
+VALUES (5, 'Cloud Infrastructure Migration', 750000.00)
+ON DUPLICATE KEY UPDATE name=name;
+
+
