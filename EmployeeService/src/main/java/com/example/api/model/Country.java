@@ -11,10 +11,9 @@ import java.util.List;
 @AttributeOverride(name="id", column = @Column(name="country_id"))
 public class Country {
 
-    @Column(name="name")
+    @Column(name="name", nullable = false, length = 200)
     private String countryName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "region")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
     private List<Region> regions;
-
 }

@@ -9,7 +9,7 @@ import lombok.Data;
 @AttributeOverride(name ="id", column= @Column(name="region_id"))
 public class Region {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 200)
     private String regionName;
 
     @ManyToOne

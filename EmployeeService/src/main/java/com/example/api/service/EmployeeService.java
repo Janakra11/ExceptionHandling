@@ -34,13 +34,17 @@ public class EmployeeService {
 
         Employee dbEmp = employeeRepository.findEmployeeByEmail(employee.getEmail());
 
+        Employee emp = null;
+
         if(dbEmp != null){
             dbEmp.setName(employee.getName());
             dbEmp.setDesignation(employee.getDesignation());
             dbEmp.setAddress(employee.getAddress());
             dbEmp.setSalary(employee.getSalary());
+
+            emp = employeeRepository.save(dbEmp);
         }
 
-        return employeeRepository.save(dbEmp);
+        return emp;
     }
 }

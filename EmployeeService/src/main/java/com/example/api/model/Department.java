@@ -17,8 +17,9 @@ public class Department {
     @Column(name="manager_id", nullable = false)
     private Long managerId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "department`      1   q1 1")
-    private List<Location> locations;
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location locations;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
     private List<Employee> employees;

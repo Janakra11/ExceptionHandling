@@ -28,7 +28,8 @@ public class Employee extends BaseEntity{
     @Column(name="address", nullable = false)
     private String address;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobs")
+    @ManyToOne
+    @JoinColumn(name="job_id")
     private Job job;
 
     @ManyToOne
