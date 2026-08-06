@@ -11,8 +11,8 @@ public class EvenOddThreadCompletableFuture {
     private static IntPredicate oddCond=e->e%2!=0;
 
     public static void main(String[] args) throws InterruptedException {
-        CompletableFuture.runAsync(()->EvenOddThreadCompletableFuture.printNumber(evenCond));
         CompletableFuture.runAsync(()->EvenOddThreadCompletableFuture.printNumber(oddCond));
+        CompletableFuture.runAsync(()->EvenOddThreadCompletableFuture.printNumber(evenCond));
         Thread.sleep(1000);
     }
 
